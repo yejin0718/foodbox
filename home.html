@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>맛집상자</title>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    body {
+        line-height: 1.6;
+        background-color: #fff;
+    }
+
+    /* 네비게이션 바 */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        background-color: white;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        font-size: 18px;
+        color: black;
+    }
+
+    .nav-links a.active {
+        color: #2e7d32; /* 초록색 강조 */
+        font-weight: bold;
+    }
+
+    .hero {
+        background-image: url('./img/school.png'); /* 실제 이미지로 교체하세요 */
+        background-size: cover;
+        background-position: center;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+   
+
+    .hero-text h1 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 2px 2px 3px #000;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background-color: #2e7d32;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 18px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    /* 푸터 */
+    footer {
+        text-align: center;
+        padding: 20px 0;
+        font-size: 14px;
+        color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">맛집상자</div>
+      <ul class="nav-links">
+        <li><a href="#" class="active">홈</a></li>
+        <li><a href="#">맛집소개</a></li>
+        <li><a href="#">추천메뉴</a></li>
+        <li><a href="#">맛집추가</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="hero-text">
+        <h1>캠퍼스 생활에 즐거움을<br>더해줄 맛집정보</h1>
+        <a href="#" class="cta-button">우리 학교 맛집 보러가기</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>@yejin</p>
+  </footer>
+</body>
+</html>
