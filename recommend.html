@@ -7,131 +7,131 @@
   <link rel="stylesheet" href="recommend.css" />
   <style>
     body {
-  font-family: 'Noto Sans KR', sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  background-color: #f7f8fa;
-}
+        font-family: 'Noto Sans KR', sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-color: #f7f8fa;
+    }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background-color: white;
-  border-bottom: 1px solid #ddd;
-}
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: white;
+        border-bottom: 1px solid #ddd;
+    }
 
-header h1 {
-  font-weight: bold;
-}
+    header h1 {
+        font-weight: bold;
+    }
 
-nav a {
-  margin: 0 12px;
-  text-decoration: none;
-  color: black;
-  font-weight: 500;
-}
+    nav a {
+        margin: 0 12px;
+        text-decoration: none;
+        color: black;
+        font-weight: 500;
+    }
 
-nav a.active {
-  color: green;
-  font-weight: bold;
-}
+    nav a.active {
+        color: green;
+        font-weight: bold;
+    }
 
-main {
-  padding: 40px 20px;
-}
+    main {
+        padding: 40px 20px;
+    }
 
-.roulette-container {
-  position: relative;
-  margin: 0 auto;
-  width: 300px;
-  height: 300px;
-}
+    .roulette-container {
+        position: relative;
+        margin: 0 auto;
+        width: 300px;
+        height: 300px;
+    }
 
-.arrow {
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 24px solid navy;
-  position: absolute;
-  top: -30px;
-  left: calc(50% - 12px);
-}
+    .arrow {
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 24px solid navy;
+        position: absolute;
+        top: -30px;
+        left: calc(50% - 12px);
+    }
 
-.wheel {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  border: 10px solid black;
-  position: relative;
-  transition: transform 4s ease-out;
-  transform: rotate(0deg);
-  overflow: hidden;
-}
+    .wheel {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 10px solid black;
+        position: relative;
+        transition: transform 4s ease-out;
+        transform: rotate(0deg);
+        overflow: hidden;
+    }
 
-.segment {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
-}
+    .segment {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+    }
 
-.segment span {
-  transform: rotate(-45deg);
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-}
+    .segment span {
+        transform: rotate(-45deg);
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+    }
 
-.segment.a {
-  background-color: #f44336;
-  transform: rotate(0deg);
-}
-.segment.b {
-  background-color: #ff9800;
-  transform: rotate(90deg);
-}
-.segment.c {
-  background-color: #4caf50;
-  transform: rotate(180deg);
-}
-.segment.d {
-  background-color: #ffeb3b;
-  color: black;
-  transform: rotate(270deg);
-}
+    .segment.a {
+        background-color: #f44336;
+        transform: rotate(0deg);
+    }
+    .segment.b {
+        background-color: #ff9800;
+        transform: rotate(90deg);
+    }
+    .segment.c {
+        background-color: #4caf50;
+        transform: rotate(180deg);
+    }
+    .segment.d {
+        background-color: #ffeb3b;
+        color: black;
+        transform: rotate(270deg);
+    }
 
-.segment.d span {
-  color: black;
-}
+    .segment.d span {
+        color: black;
+    }
 
-button#spinBtn {
-  margin-top: 30px;
-  padding: 10px 20px;
-  background-color: #1f7a1f;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    button#spinBtn {
+        margin-top: 30px;
+        padding: 10px 20px;
+        background-color: #1f7a1f;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
 
-button#spinBtn:hover {
-  background-color: #145c14;
-}
+    button#spinBtn:hover {
+        background-color: #145c14;
+    }
 
-footer {
-  margin-top: 60px;
-  color: #888;
-  font-size: 14px;
-}
+    footer {
+        margin-top: 60px;
+        color: #888;
+        font-size: 14px;
+    }
 
   </style>
 </head>
@@ -161,7 +161,7 @@ footer {
   </main>
 
   <footer>
-    <p>@yejin</p>
+    <p>©맛집상자</p>
   </footer>
 </body>
 </html>
