@@ -6,12 +6,11 @@
   <link rel="stylesheet" href="style.css">
   <style>
     body {
-      background-color: #f7f8fa;
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
       text-align: center;
-    }
+    } 
 
     header {
       display: flex;
@@ -19,6 +18,10 @@
       align-items: center;
       padding: 20px 40px;
       background-color: white;
+    }
+
+    main {
+      background-color: #f7f8fa;
     }
 
     nav ul {
@@ -45,6 +48,15 @@
       align-items: flex-start;
       gap: 20px;
       padding: 40px;
+    }
+
+    .map {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      background: url('./img/map.png') no-repeat center / cover;
+      border: 2px solid #2f5939;
+      margin: 50px auto;
     }
 
     .map-section {
@@ -76,6 +88,37 @@
     background-color: green;
     color: white;
   }
+
+  .marker .tooltip {
+      display: none;
+      position: absolute;
+      top: -110px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      background-color: #fff;
+      border: 2px solid #2f5939;
+      border-radius: 10px;
+      padding: 10px;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .marker:hover .tooltip {
+      display: block;
+    }
+
+    .tooltip img {
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .tooltip p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #333;
+    }
 
     /* 카테고리 버튼 */
     .category-buttons {
@@ -144,7 +187,7 @@
     opacity: 0.85;
     transform: scale(1.05);
     transition: all 0.2s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 0 3px #2f5939;
   }
 
 
@@ -201,18 +244,31 @@
       <img src="./img/map.png" alt="학교 주변 지도" class="map-image">
       
       <!-- 마커들 -->
-      <div class="marker" style="top: 30%; left: 20%;">🍴</div>
-      <div class="marker" style="top: 40%; left: 60%;">🍴</div>
-      <div class="marker" style="top: 60%; left: 40%;">🍴</div>
-      <div class="marker" style="top: 70%; left: 70%;">🍴</div>
+      <div class="marker" style="top: 50%; left: 30%;">
+        🍴
+        <div class="tooltip">
+          <img src="./img/pasta.png" alt="파스타">
+          <p><strong>맛있는 파스타</strong></p>
+          <p>추천메뉴: 파스타</p>
+        </div>
+      </div>
+
+      <div class="marker" style="top: 40%; left: 60%;">
+        🍴
+        <div class="tooltip">
+          <img src="./img/kimchi.png" alt="김치찌개개">
+          <p><strong>찌개마을</strong></p>
+          <p>추천메뉴: 김치찌개</p>
+        </div>
+      </div>
+      
 
       <!-- 카테고리 버튼 -->
       <div class="filter-container">
         <button class="filter-btn korean active">🍚한식</button>
-        <button class="filter-btn western">🍝양식</button>
+        <button class="filter-btn western active">🍝양식</button>
         <button class="filter-btn chinese">🍜중식</button>
         <button class="filter-btn japanese">🍙일식</button>
-        <button class="filter-btn snack">🥟분식</button>
         <button class="filter-btn all">🍰베이커리</button>
       </div>
 
@@ -221,12 +277,12 @@
     <!-- 추천 맛집 -->
     <div class="recommend-section">
       <div class="food-box">
-        <img src="./img/pasta.png" alt="짜장면">
-        <p>파스타<br>학식보다 맛있는<br>학교 근처 9000원<br>인생 파스타, 싸고 맛있음</p>
+        <img src="./img/pasta.png" alt="파스타">
+        <p>맛있는 파스타<br>분위기 좋은 양식집<br>위치: 보광로 00로<br>추천 메뉴: 파스타</p>
       </div>
       <div class="food-box">
         <img src="./img/kimchi.png" alt="김치찌개">
-        <p>김치찌개<br>매콤한 국물 맛<br>밥 무한 리필 가능</p>
+        <p>찌개마을<br>김치찌개가 맛있는 한식집<br>위치: 보광로 00로<br>추천 메뉴: 김치찌개</p>
       </div>
     </div>
   </main>
