@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="recommend.css" />
   <style>
     body {
-        font-family: 'Noto Sans KR', sans-serif;
-        margin: 0;
-        padding: 0;
-        text-align: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
     }
 
     header {
@@ -22,12 +22,16 @@
     }
 
     main {
-        background-color: #f7f8fa;
-        height: 579px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 579px;
+      background-color: #f7f8fa;
     }
 
     header h1 {
-        font-weight: bold;
+      font-weight: bold;
     }
 
     nav ul {
@@ -49,103 +53,103 @@
     }
 
     main {
-        padding: 40px 20px;
+      padding: 40px 20px;
     }
 
     .roulette-container {
-        position: relative;
-        margin: 0 auto;
-        width: 300px;
-        height: 300px;
+      position: relative;
+      margin: 0 auto;
+      width: 300px;
+      height: 300px;
     }
 
     .arrow {
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-bottom: 24px solid #5769C3;
-        position: absolute;
-        top: -11px;
-        left: calc(50% - 12px);
-        transform: rotate(180deg);
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 24px solid #5769C3;
+      position: absolute;
+      top: -11px;
+      left: calc(50% - 12px);
+      transform: rotate(180deg);
     }
 
 
     .wheel {
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        border: 10px solid black;
-        position: relative;
-        transition: transform 4s ease-out;
-        transform: rotate(0deg);
-        overflow: hidden;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 10px solid black;
+      position: relative;
+      transition: transform 4s ease-out;
+      transform: rotate(0deg);
+      overflow: hidden;
     }
 
     .segment {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
-}
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+    }
 
-.segment span {
-    position: absolute;
-    top: 50%;
-    left: 78%;
-    transform: translate(-50%, -120%);
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    text-align: center;
-    white-space: nowrap;
-    width: max-content;  
-}
+  .segment span {
+      position: absolute;
+      top: 50%;
+      left: 78%;
+      transform: translate(-50%, -120%);
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      text-align: center;
+      white-space: nowrap;
+      width: max-content;  
+  }
 
     .segment.a {
-        background-color: #f44336;
-        transform: rotate(0deg);
+      background-color: #f44336;
+      transform: rotate(0deg);
     }
     .segment.b {
-        background-color: #ff9800;
-        transform: rotate(90deg);
+      background-color: #ff9800;
+      transform: rotate(90deg);
     }
     .segment.c {
-        background-color: #4caf50;
-        transform: rotate(180deg);
+      background-color: #4caf50;
+      transform: rotate(180deg);
     }
     .segment.d {
-        background-color: #ffeb3b;
-        color: black;
-        transform: rotate(270deg);
+      background-color: #ffeb3b;
+      color: black;
+      transform: rotate(270deg);
     }
 
     .segment.d span {
-        color: black;
+      color: black;
     }
 
     button#spinBtn {
-        margin-top: 30px;
-        padding: 10px 20px;
-        background-color: #1f7a1f;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #1f7a1f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
     }
 
     button#spinBtn:hover {
-        background-color: #145c14;
+      background-color: #145c14;
     }
 
     footer {
-        text-align: center;
-        padding: 20px 0;
-        font-size: 14px;
-        color: #000;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 14px;
+      color: #000;
     }
 
   </style>
