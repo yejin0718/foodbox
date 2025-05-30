@@ -5,29 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>맛집상자</title>
   <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Noto Sans KR', sans-serif;
-    }
 
     body {
-        line-height: 1.6;
-        background-color: #fff;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    } 
+
+     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: white;
     }
 
-     main {
-      background-color: #f7f8fa;
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
     }
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 50px;
-        background-color: white;
-        border-bottom: 1px solid #ddd;
+    nav a {
+      text-decoration: none;
+      color: black;
+    }
+
+    nav a.active {
+      color: green;
+      font-weight: bold;
     }
 
     .logo {
@@ -35,28 +44,11 @@
         font-weight: bold;
     }
 
-    .nav-links {
-        list-style: none;
-        display: flex;
-        gap: 30px;
-    }
-
-    .nav-links a {
-        text-decoration: none;
-        font-size: 18px;
-        color: black;
-    }
-
-    .nav-links a.active {
-        color: #2e7d32;
-        font-weight: bold;
-    }
-
     .hero {
         background-image: url('./img/school.png');
         background-size: cover;
         background-position: center;
-        height: 500px;
+        height: 647px;
         width: 100%;
         display: flex;
         justify-content: center;
@@ -85,24 +77,23 @@
         font-weight: bold;
     }
 
-    /* 푸터 */
     footer {
         text-align: center;
         padding: 20px 0;
         font-size: 14px;
-        color: #555;
+        color: #000;
     }
   </style>
 </head>
 <body>
   <header>
-    <nav class="navbar">
-      <div class="logo">맛집상자</div>
-      <ul class="nav-links">
-        <li><a href="#" class="active">홈</a></li>
-        <li><a href="#">맛집소개</a></li>
-        <li><a href="#">추천메뉴</a></li>
-        <li><a href="#">맛집추가</a></li>
+    <h1>맛집상자</h1>
+    <nav>
+      <ul>
+        <li><a href="home.html" class="active">홈</a></li>
+        <li><a href="introduce.html">맛집소개</a></li>
+        <li><a href="recommend.html">추천메뉴</a></li>
+        <li><a href="add.html">맛집추가</a></li>
       </ul>
     </nav>
   </header>

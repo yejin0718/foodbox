@@ -13,33 +13,39 @@
         text-align: center;
     }
 
-    header {             
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 30px;
-        background-color: white;
-        border-bottom: 1px solid #ddd;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: white;
     }
 
     main {
         background-color: #f7f8fa;
+        height: 579px;
     }
 
     header h1 {
         font-weight: bold;
     }
 
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+
     nav a {
-        margin: 0 12px;
-        text-decoration: none;
-        color: black;
-        font-weight: 500;
+      text-decoration: none;
+      color: black;
     }
 
     nav a.active {
-        color: green;
-        font-weight: bold;
+      color: green;
+      font-weight: bold;
     }
 
     main {
@@ -147,10 +153,12 @@
   <header>
     <h1>맛집상자</h1>
     <nav>
-      <a href="home.html">홈</a>
-      <a href="intro.html" class="active">맛집소개</a>
-      <a href="recommend.html">추천메뉴</a>
-      <a href="add.html">맛집추가</a>
+      <ul>
+        <li><a href="home.html">홈</a></li>
+        <li><a href="introduce.html">맛집소개</a></li>
+        <li><a href="recommend.html" class="active">추천메뉴</a></li>
+        <li><a href="add.html">맛집추가</a></li>
+      </ul>
     </nav>
   </header>
 
