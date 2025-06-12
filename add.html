@@ -1,125 +1,153 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>맛집상자 - 맛집 추가</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
+    <meta charset="UTF-8">
+    <title>맛집상자 - 맛집 추가</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 42px 40px;
-    background-color: white;
-  }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 42px 40px;
+            background-color: white;
+        }
 
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-    margin: 0;
-    padding: 0;
-  }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
 
-  nav a {
-    text-decoration: none;
-    color: black;
-  }
+        nav a {
+            text-decoration: none;
+            color: black;
+        }
 
-  nav a.active {
-    color: green;
-    font-weight: bold;
-  }
+        nav a.active {
+            color: green;
+            font-weight: bold;
+        }
 
-  h1 {
-    margin: 0;
-  }
+        h1 {
+            margin: 0;
+        }
 
-  main {
-    background-color: #91c89d;
-    height: 658px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+        main {
+            background-color: #91c89d;
+            height: 658px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-  .form-section {
-    background-color: #91c89d;
-    padding: 20px;
-    text-align: center;
-  }
+        .form-section {
+            background-color: #91c89d;
+            padding: 20px;
+            text-align: center;
+        }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 300px;
-    margin: 0 auto;
-  }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
 
-  input[type="text"],
-  input[type="file"] {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    background-color: white;
-  }
+        input[type="text"],
+        input[type="file"] {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: white;
+        }
 
-  button {
-    padding: 10px;
-    background-color: #2c5935;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-  }
+        button {
+            padding: 10px;
+            background-color: #2c5935;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-  footer {
-    text-align: center;
-    padding: 20px 0;
-    font-size: 14px;
-    color: #000;
-  }
-  </style>
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 14px;
+            color: #000;
+        }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("restaurantForm").addEventListener("submit", function(e) {
+        const name = document.getElementById("name").value.trim();
+        const summary = document.getElementById("summary").value.trim();
+        const location = document.getElementById("location").value.trim();
+        const menu = document.getElementById("menu").value.trim();
+        const imageInput = document.getElementById("image");
+        const imageFile = imageInput.files[0];
+        
+        if (!name || !summary || !location || !menu || !imageFile) {
+            alert("모든 필수 항목을 입력해주세요.");
+                e.preventDefault();
+                return;
+            }
+        });
+
+        const allowedExtensions = ['jpg', 'jpeg', 'png'];
+        const fileName = imageFile.name.toLowerCase();
+        const extension = fileName.split('.').pop();
+
+        if (!allowedExtensions.includes(extension)) {
+            alert("이미지는 jpg, jpeg, png 형식만 업로드 가능합니다.");
+            e.preventDefault();
+            return;
+        }
+
+        //맛집 저장하는 로직 추가 예정
+    });
+  </script>
 </head>
 <body>
-  <header>
+<header>
     <h1>맛집상자</h1>
     <nav>
-      <ul>
+    <ul>
         <li><a href="home.html">홈</a></li>
         <li><a href="introduce.html">맛집소개</a></li>
         <li><a href="recommend.html">추천메뉴</a></li>
         <li><a href="add.html" class="active">맛집추가</a></li>
-      </ul>
+    </ul>
     </nav>
-  </header>
+</header>
 
-  <main>
+<main>
     <section class="form-section">
-      <h2>내 맛집 추가하기</h2>
-      <form>
-        <input type="text" placeholder="맛집 이름" required>
-        <input type="text" placeholder="한줄소개" required>
-        <input type="file" placeholder="맛집 이미지">
-        <input type="text" placeholder="위치" required>
-        <input type="text" placeholder="추천 메뉴" required>
+    <h2>내 맛집 추가하기</h2>
+    <form id="restaurantForm" novalidate>
+        <input id="name" type="text" placeholder="맛집 이름" required>
+        <input id="summary" type="text" placeholder="한줄소개" required>
+        <input id="image" type="file" placeholder="맛집 이미지">
+        <input id="location" type="text" placeholder="위치" required>
+        <input id="menu" type="text" placeholder="추천 메뉴" required>
         <button type="submit">등록</button>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <p>©맛집상자</p>
-  </footer>
+    </form>
+</section>
+</main>
+    <footer>
+        <p>©맛집상자</p>
+    </footer>
 </body>
 </html>
