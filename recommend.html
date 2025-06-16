@@ -1,188 +1,269 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>추천메뉴</title>
-  <link rel="stylesheet" href="recommend.css" />
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>추천메뉴</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: white;
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background-color: white;
-    }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: white;
+        }
 
-    main {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 579px;
-      background-color: #f7f8fa;
-    }
+        header h1 {
+            font-weight: bold;
+        }
 
-    header h1 {
-      font-weight: bold;
-    }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-      margin: 0;
-      padding: 0;
-    }
+        nav a {
+            text-decoration: none;
+            color: black;
+        }
 
-    nav a {
-      text-decoration: none;
-      color: black;
-    }
+        nav a.active {
+            color: green;
+            font-weight: bold;
+        }
 
-    nav a.active {
-      color: green;
-      font-weight: bold;
-    }
+        main {
+            height: 579px;
+            background-color: #f7f8fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 579px;
+        }
 
-    main {
-      padding: 40px 20px;
-    }
+        #wheelCanvas {
+            border: 10px solid black;
+            border-radius: 50%;
+            background-color: white;
+        }
 
-    .roulette-container {
-      position: relative;
-      margin: 0 auto;
-      width: 300px;
-      height: 300px;
-    }
+        button#spinBtn {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #1f7a1f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    .arrow {
-      width: 0;
-      height: 0;
-      border-left: 12px solid transparent;
-      border-right: 12px solid transparent;
-      border-bottom: 24px solid #5769C3;
-      position: absolute;
-      top: -11px;
-      left: calc(50% - 12px);
-      transform: rotate(180deg);
-    }
+        button#spinBtn:hover {
+            background-color: #145c14;
+        }
 
+        #resultModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
-    .wheel {
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      border: 10px solid black;
-      position: relative;
-      transition: transform 4s ease-out;
-      transform: rotate(0deg);
-      overflow: hidden;
-    }
+        #resultModal > div {
+            width: 30%;
+            height: 30%;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
 
-    .segment {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
-    }
+        #modalImage {
+            width: 84%;
+            height: 73%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
 
-  .segment span {
-      position: absolute;
-      top: 50%;
-      left: 78%;
-      transform: translate(-50%, -120%);
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-      text-align: center;
-      white-space: nowrap;
-      width: max-content;  
-  }
+        #modalTitle {
+            margin-top: 0%;
+        }
 
-    .segment.a {
-      background-color: #f44336;
-      transform: rotate(0deg);
-    }
-    .segment.b {
-      background-color: #ff9800;
-      transform: rotate(90deg);
-    }
-    .segment.c {
-      background-color: #4caf50;
-      transform: rotate(180deg);
-    }
-    .segment.d {
-      background-color: #ffeb3b;
-      color: black;
-      transform: rotate(270deg);
-    }
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1f7a1f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    .segment.d span {
-      color: black;
-    }
+      .close-btn:hover {
+          background-color: #145c14;
+      }
 
-    button#spinBtn {
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #1f7a1f;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+      #confettiCanvas {
+          position: absolute;
+          top: 0; left: 0;
+          pointer-events: none;
+      }
 
-    button#spinBtn:hover {
-      background-color: #145c14;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px 0;
-      font-size: 14px;
-      color: #000;
-    }
-
+      footer {
+          text-align: center;
+          padding: 20px 0;
+          font-size: 14px;
+          background-color: white;
+          color: #000;
+      }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+      let restaurants = [];
+      let anglePerSegment;
+      let currentAngle = 0;
+
+      window.addEventListener("DOMContentLoaded", () => {
+          fetch("http://localhost:3000/restaurants")
+              .then((res) => res.json())
+              .then((data) => {
+                  restaurants = data;
+                  drawRouletteWheel();
+          });
+
+          document.getElementById("spinBtn").addEventListener("click", () => {
+              const selectedIndex = Math.floor(Math.random() * restaurants.length);
+              const rotateTo = 360 * 5 + (360 - (selectedIndex * anglePerSegment * 180 / Math.PI)) - (anglePerSegment * 90 / Math.PI);
+
+              const canvas = document.getElementById("wheelCanvas");
+              canvas.style.transition = "transform 4s ease-out";
+              canvas.style.transform = `rotate(${rotateTo + currentAngle}deg)`;
+
+              currentAngle += rotateTo;
+
+              setTimeout(() => {
+                 showResult(restaurants[selectedIndex]);
+              }, 4000);
+          });
+      });
+
+      function drawRouletteWheel() {
+          const canvas = document.getElementById("wheelCanvas");
+          const ctx = canvas.getContext("2d");
+          const radius = canvas.width / 2;
+          anglePerSegment = 2 * Math.PI / restaurants.length;
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          restaurants.forEach((r, i) => {
+              const angle = i * anglePerSegment;
+
+              // slice
+              ctx.beginPath();
+              ctx.moveTo(radius, radius);
+              ctx.arc(radius, radius, radius - 10, angle, angle + anglePerSegment);
+              ctx.closePath();
+              ctx.fillStyle = getColor(i);
+              ctx.fill();
+
+              // text
+              ctx.save();
+              ctx.translate(radius, radius);
+              ctx.rotate(angle + anglePerSegment / 2);
+              ctx.textAlign = "right";
+              ctx.fillStyle = "white";
+              ctx.font = "bold 16px sans-serif";
+              ctx.fillText(r.name, radius - 20, 10);
+              ctx.restore();
+          });
+      }
+
+      function getColor(index) {
+          const colors = ["#f44336", "#ff9800", "#4caf50", "#2196f3", "#9c27b0", "#009688", "#795548", "#607d8b", "#e91e63", "#3f51b5"];
+          return colors[index % colors.length];
+      }
+
+      function showResult(restaurant) {
+          document.getElementById("modalTitle").textContent = restaurant.name;
+          document.getElementById("modalImage").src = restaurant.imageUrl;
+          document.getElementById("resultModal").style.display = "flex";
+          launchConfetti();
+      }
+
+      function closeModal() {
+          document.getElementById("resultModal").style.display = "none";
+          const canvas = document.getElementById("confettiCanvas");
+          const ctx = canvas.getContext("2d");
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function launchConfetti() {
+          const duration = 2 * 1000;
+          const end = Date.now() + duration;
+          const canvas = document.getElementById("confettiCanvas");
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+
+          (function frame() {
+              confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+              confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+              if (Date.now() < end) requestAnimationFrame(frame);
+          })();
+      }
+    </script>
 </head>
 <body>
-  <header>
-    <h1>맛집상자</h1>
-    <nav>
-      <ul>
-        <li><a href="home.html">홈</a></li>
-        <li><a href="introduce.html">맛집소개</a></li>
-        <li><a href="recommend.html" class="active">추천메뉴</a></li>
-        <li><a href="add.html">맛집추가</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+        <h1>맛집상자</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">홈</a></li>
+                <li><a href="introduce.html">맛집소개</a></li>
+                <li><a href="recommend.html" class="active">추천메뉴</a></li>
+                <li><a href="add.html">맛집추가</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main>
-    <h2>오늘 뭐 먹지?</h2>
-    <div class="roulette-container">
-      <div class="arrow"></div>
-      <div class="wheel" id="wheel">
-        <div class="segment a"><span>A식당</span></div>
-        <div class="segment b"><span>B식당</span></div>
-        <div class="segment c"><span>C식당</span></div>
-        <div class="segment d"><span>D식당</span></div>
-      </div>
+    <main>
+        <h2>오늘 뭐 먹지?</h2>
+        <canvas id="wheelCanvas" width="400" height="400"></canvas>
+        <button id="spinBtn">돌리기</button>
+    </main>
+
+    <div id="resultModal">
+        <div>
+            <img id="modalImage" src="" alt="식당 이미지">
+            <h3 id="modalTitle"></h3>
+            <button class="close-btn" style="margin-top:-2%" onclick="closeModal()" style="margin-top:20px;">닫기</button>
+            <canvas id="confettiCanvas"></canvas>
+        </div>
     </div>
-    <button id="spinBtn">돌리기</button>
-  </main>
 
-  <footer>
-    <p>©맛집상자</p>
-  </footer>
+    <footer>
+        <p>©맛집상자</p>
+    </footer>
 </body>
 </html>
