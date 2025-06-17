@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>맛집소개</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -226,6 +225,83 @@
     color: #000;
   }
   </style>
+  <script>
+    let restaurant;
+
+    function getRestaurants(map) {
+      fetch("http://localhost:3000/restaurants")
+              .then((res) => res.json())
+              .then((data) => {
+                  restaurant = data;
+                  console.log("restaurant = ", restaurant);
+
+                  addMarkersToMap(map);
+          });
+    }
+
+function createOverlayContent(data) {
+  return `
+      <div style="width: 130px; height: 130px; border: 2px solid #2f5939; border-radius: 6px; overflow: hidden; background-color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+      <img src="${data.imageUrl}" style="width: 100%; height: 80px; object-fit: cover;" alt="${data.name}">
+      <div style="padding: 8px;">
+        <p style="margin: 4px 0; font-weight: bold; font-size: 14px;">${data.name}</p>
+      </div>
+    </div>
+  `;
+}
+
+function addMarkersToMap(map) {
+  for (let i = 0; i < restaurant.length; i++) {
+    const data = restaurant[i];
+
+    const markerPosition = new kakao.maps.LatLng(data.lat, data.lng);
+
+    const markerImage = new kakao.maps.MarkerImage(
+      './img/marker.png',
+      new kakao.maps.Size(35, 35),
+      { offset: new kakao.maps.Point(27, 69) }
+    );
+
+    const marker = new kakao.maps.Marker({
+      position: markerPosition,
+      image: markerImage,
+      map: map
+    });
+
+    const overlayContent = document.createElement("div");
+    overlayContent.innerHTML = createOverlayContent(data);
+    overlayContent.style.pointerEvents = "auto";
+    overlayContent.addEventListener("mouseenter", () => {
+      if (overlayTimeout) clearTimeout(overlayTimeout);
+    });
+    overlayContent.addEventListener("mouseleave", () => {
+      if (activeOverlay) activeOverlay.setMap(null);
+    });
+
+    const overlay = new kakao.maps.CustomOverlay({
+      content: overlayContent,
+      position: markerPosition,
+      xAnchor: 0.5,
+      yAnchor: 1.2
+    });
+
+    kakao.maps.event.addListener(marker, 'mouseover', () => {
+      if (activeOverlay) activeOverlay.setMap(null);
+      overlay.setMap(map);
+      activeOverlay = overlay;
+    });
+
+    kakao.maps.event.addListener(marker, 'mouseout', () => {
+      overlayTimeout = setTimeout(() => {
+        overlay.setMap(null);
+        activeOverlay = null;
+      }, 150);
+    });
+  }
+}
+
+
+  </script>
 </head>
 <body>
   <header>
@@ -243,7 +319,22 @@
   <main class="intro-container">
     <!-- 지도 영역 -->
     <div class="map-section">
-      <img src="./img/map.png" alt="학교 주변 지도" class="map-image">
+      <!-- <img src="./img/map.png" alt="학교 주변 지도" class="map-image"> -->
+      <div id="map" style="width:600px;height:400px;"></div>
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=appkey(수정필요)&libraries=services,clusterer"></script>
+      <script>
+         kakao.maps.load(function() {
+            var container = document.getElementById("map");
+            var options = {
+                center: new kakao.maps.LatLng(37.530061, 126.996770), // 지도 중심좌표
+                level: 3 // 지도 확대 레벨
+            };
+            // 지도 생성
+            var map = new kakao.maps.Map(container, options);
+
+            getRestaurants(map);
+        });
+      </script>
       
       <!-- 마커들 -->
       <div class="marker" style="top: 50%; left: 30%;">
