@@ -8,7 +8,8 @@
       "lat": 37.530791,
       "lng": 126.996202,
       "menu": "뼈해장국",
-      "imageUrl": "./img/다우리감자탕.png"
+      "imageUrl": "./img/다우리감자탕.png",
+      "category": "korean"
     },
     {
       "id": 2,
@@ -18,7 +19,8 @@
       "lat": 37.531294,
       "lng": 126.996610,
       "menu": "라볶이",
-      "imageUrl": "./img/분식천국.jpg"
+      "imageUrl": "./img/분식천국.jpg",
+      "category": "korean"
     },
     {
       "id": 3,
@@ -28,7 +30,8 @@
       "lat": 37.530727,
       "lng": 126.997041,
       "menu": "고로케 카레",
-      "imageUrl": "./img/어제의카레.jpg"
+      "imageUrl": "./img/어제의카레.jpg",
+      "category": "japanese"
     },
     {
       "id": 4,
@@ -38,7 +41,8 @@
       "lat": 37.526371,
       "lng": 127.000518,
       "menu": "짜장면",
-      "imageUrl": "./img/한일각.jpg"
+      "imageUrl": "./img/한일각.jpg",
+      "category": "chinese"
     },
     {
       "id": 5,
@@ -48,7 +52,8 @@
       "lat": 37.532069,
       "lng": 126.994607,
       "menu": "크루키",
-      "imageUrl": "./img/홈볼트.jpg"
+      "imageUrl": "./img/홈볼트.jpg",
+      "category": "snack"
     },
     {
       "id": 6,
@@ -58,7 +63,8 @@
       "lat": 37.531154,
       "lng": 126.996809,
       "menu": "히레가스",
-      "imageUrl": "./img/나무아래.jpg"
+      "imageUrl": "./img/나무아래.jpg",
+      "category": "japanese"
     },
     {
       "id": 7,
@@ -68,7 +74,8 @@
       "lat": 37.531579,
       "lng": 126.994698,
       "menu": "김밥 닭강정 콤비세트",
-      "imageUrl": "./img/오토김밥.jpg"
+      "imageUrl": "./img/오토김밥.jpg",
+      "category": "korean"
     },
     {
       "id": 8,
@@ -78,7 +85,8 @@
       "lat": 37.533865,
       "lng": 126.993725,
       "menu": "바나나빵",
-      "imageUrl": "./img/굿브레드.jpg"
+      "imageUrl": "./img/굿브레드.jpg",
+      "category": "snack"
     },
     {
       "id": 9,
@@ -88,7 +96,8 @@
       "lat": 37.532715,
       "lng": 126.994409,
       "menu": "트러플 버섯 크림 파스타",
-      "imageUrl": "./img/Koi.jpg"
+      "imageUrl": "./img/Koi.jpg",
+      "category": "western"
     },
     {
       "id": 10,
@@ -98,7 +107,8 @@
       "lat": 37.533919,
       "lng": 126.994730,
       "menu": "카라구치라멘",
-      "imageUrl": "./img/멘야산다이메.jpg"
+      "imageUrl": "./img/멘야산다이메.jpg",
+      "category": "japanese"
     }
   ]
 }

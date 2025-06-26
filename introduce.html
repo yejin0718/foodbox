@@ -225,11 +225,13 @@
     color: #000;
   }
   </style>
- <script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
   let restaurant = [];
   let markers = [];
   let activeOverlay = null;
   let overlayTimeout = null;
+  let selectedCategories = new Set(["korean", "western"]); // 초기 선택값
 
   function getRestaurants(map) {
     fetch("http://localhost:3000/restaurants")
@@ -254,10 +256,9 @@
             map: map
           });
 
-          marker.restaurantData = data; // 연결
+          marker.restaurantData = data;
           markers.push(marker);
 
-          // 오버레이
           const overlayContent = document.createElement("div");
           overlayContent.innerHTML = createOverlayContent(data);
           overlayContent.style.pointerEvents = "auto";
@@ -283,39 +284,66 @@
           });
         }
 
-        updateRecommendListInBounds(map); // 처음에도 리스트 출력
+        updateRecommendListInBounds(map);
       });
   }
 
-  function updateRecommendListInBounds(map) {
-    const bounds = map.getBounds();
-    const recommendList = document.getElementById("recommend-list");
-    recommendList.innerHTML = "";
+function updateRecommendListInBounds(map) {
+  const bounds = map.getBounds();
+  const recommendList = document.getElementById("recommend-list");
+  recommendList.innerHTML = "";
 
-    for (let marker of markers) {
-      const position = marker.getPosition();
-      if (bounds.contain(position)) {
-        const data = marker.restaurantData;
-        const card = document.createElement("div");
-        card.className = "food-box";
-        card.innerHTML = `
-          <img src="${data.imageUrl}" alt="${data.name}">
-          <p>${data.name}<br>${data.description || ""}<br>위치: ${data.address}<br>추천 메뉴: ${data.menu}</p>
-        `;
-        recommendList.appendChild(card);
-      }
+  const showAll = selectedCategories.size === 0;
+
+  for (let marker of markers) {
+    const data = marker.restaurantData;
+    const category = data.category;
+    const position = marker.getPosition();
+
+    const isVisible = bounds.contain(position) && (showAll || selectedCategories.has(category));
+
+    if (isVisible) {
+      marker.setMap(map);
+
+      const card = document.createElement("div");
+      card.className = "food-box";
+      card.innerHTML = `
+        <img src="${data.imageUrl}" alt="${data.name}">
+        <p>${data.name}<br>${data.summary || ""}<br>위치: ${data.location || "주소 없음"}<br>추천 메뉴: ${data.menu}</p>
+      `;
+      recommendList.appendChild(card);
+    } else {
+      marker.setMap(null);
     }
   }
+}
+
 
   function createOverlayContent(data) {
     return `
-        <div style="width: 130px; height: 130px; border: 2px solid #2f5939; border-radius: 6px; overflow: hidden; background-color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+      <div style="width: 130px; height: 130px; border: 2px solid #2f5939; border-radius: 6px; overflow: hidden; background-color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
         <img src="${data.imageUrl}" style="width: 100%; height: 80px; object-fit: cover;" alt="${data.name}">
         <div style="padding: 8px;">
           <p style="margin: 4px 0; font-weight: bold; font-size: 14px;">${data.name}</p>
         </div>
       </div>
     `;
+  }
+
+  function setupFilterButtons(map) {
+    $('.filter-btn').on('click', function () {
+      const category = $(this).attr('class').split(' ').find(c => ["korean", "western", "chinese", "japanese", "snack"].includes(c));
+
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        selectedCategories.delete(category);
+      } else {
+        $(this).addClass('active');
+        selectedCategories.add(category);
+      }
+
+      updateRecommendListInBounds(map);
+    });
   }
 
   window.onload = function () {
@@ -332,9 +360,13 @@
       kakao.maps.event.addListener(map, 'idle', function () {
         updateRecommendListInBounds(map);
       });
+
+      setupFilterButtons(map);
     });
   };
 </script>
+
+
 
 </head>
 <body>
@@ -355,7 +387,7 @@
     <div class="map-section">
       <!-- <img src="./img/map.png" alt="학교 주변 지도" class="map-image"> -->
       <div id="map" style="width:600px;height:400px;"></div>
-      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오key&libraries=services,clusterer"></script>
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0bc75e8097117a3566901a681b34ddff&libraries=services,clusterer"></script>
       <script>
          kakao.maps.load(function() {
             var container = document.getElementById("map");
@@ -372,8 +404,8 @@
 
       <!-- 카테고리 버튼 -->
       <div class="filter-container">
-        <button class="filter-btn korean active">🍚한식</button>
-        <button class="filter-btn western active">🍝양식</button>
+        <button class="filter-btn korean">🍚한식</button>
+        <button class="filter-btn western">🍝양식</button>
         <button class="filter-btn chinese">🍜중식</button>
         <button class="filter-btn japanese">🍙일식</button>
         <button class="filter-btn all">🍰베이커리</button>
