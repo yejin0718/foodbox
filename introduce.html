@@ -225,83 +225,117 @@
     color: #000;
   }
   </style>
-  <script>
-    let restaurant;
+ <script>
+  let restaurant = [];
+  let markers = [];
+  let activeOverlay = null;
+  let overlayTimeout = null;
 
-    function getRestaurants(map) {
-      fetch("http://localhost:3000/restaurants")
-              .then((res) => res.json())
-              .then((data) => {
-                  restaurant = data;
-                  console.log("restaurant = ", restaurant);
+  function getRestaurants(map) {
+    fetch("http://localhost:3000/restaurants")
+      .then((res) => res.json())
+      .then((data) => {
+        restaurant = data;
+        markers = [];
 
-                  addMarkersToMap(map);
+        for (let i = 0; i < restaurant.length; i++) {
+          const data = restaurant[i];
+          const markerPosition = new kakao.maps.LatLng(data.lat, data.lng);
+
+          const markerImage = new kakao.maps.MarkerImage(
+            './img/marker.png',
+            new kakao.maps.Size(35, 35),
+            { offset: new kakao.maps.Point(27, 69) }
+          );
+
+          const marker = new kakao.maps.Marker({
+            position: markerPosition,
+            image: markerImage,
+            map: map
           });
-    }
 
-function createOverlayContent(data) {
-  return `
-      <div style="width: 130px; height: 130px; border: 2px solid #2f5939; border-radius: 6px; overflow: hidden; background-color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-      <img src="${data.imageUrl}" style="width: 100%; height: 80px; object-fit: cover;" alt="${data.name}">
-      <div style="padding: 8px;">
-        <p style="margin: 4px 0; font-weight: bold; font-size: 14px;">${data.name}</p>
-      </div>
-    </div>
-  `;
-}
+          marker.restaurantData = data; // 연결
+          markers.push(marker);
 
-function addMarkersToMap(map) {
-  for (let i = 0; i < restaurant.length; i++) {
-    const data = restaurant[i];
+          // 오버레이
+          const overlayContent = document.createElement("div");
+          overlayContent.innerHTML = createOverlayContent(data);
+          overlayContent.style.pointerEvents = "auto";
 
-    const markerPosition = new kakao.maps.LatLng(data.lat, data.lng);
+          const overlay = new kakao.maps.CustomOverlay({
+            content: overlayContent,
+            position: markerPosition,
+            xAnchor: 0.5,
+            yAnchor: 1.2
+          });
 
-    const markerImage = new kakao.maps.MarkerImage(
-      './img/marker.png',
-      new kakao.maps.Size(35, 35),
-      { offset: new kakao.maps.Point(27, 69) }
-    );
+          kakao.maps.event.addListener(marker, 'mouseover', () => {
+            if (activeOverlay) activeOverlay.setMap(null);
+            overlay.setMap(map);
+            activeOverlay = overlay;
+          });
 
-    const marker = new kakao.maps.Marker({
-      position: markerPosition,
-      image: markerImage,
-      map: map
-    });
+          kakao.maps.event.addListener(marker, 'mouseout', () => {
+            overlayTimeout = setTimeout(() => {
+              overlay.setMap(null);
+              activeOverlay = null;
+            }, 150);
+          });
+        }
 
-    const overlayContent = document.createElement("div");
-    overlayContent.innerHTML = createOverlayContent(data);
-    overlayContent.style.pointerEvents = "auto";
-    overlayContent.addEventListener("mouseenter", () => {
-      if (overlayTimeout) clearTimeout(overlayTimeout);
-    });
-    overlayContent.addEventListener("mouseleave", () => {
-      if (activeOverlay) activeOverlay.setMap(null);
-    });
-
-    const overlay = new kakao.maps.CustomOverlay({
-      content: overlayContent,
-      position: markerPosition,
-      xAnchor: 0.5,
-      yAnchor: 1.2
-    });
-
-    kakao.maps.event.addListener(marker, 'mouseover', () => {
-      if (activeOverlay) activeOverlay.setMap(null);
-      overlay.setMap(map);
-      activeOverlay = overlay;
-    });
-
-    kakao.maps.event.addListener(marker, 'mouseout', () => {
-      overlayTimeout = setTimeout(() => {
-        overlay.setMap(null);
-        activeOverlay = null;
-      }, 150);
-    });
+        updateRecommendListInBounds(map); // 처음에도 리스트 출력
+      });
   }
-}
 
+  function updateRecommendListInBounds(map) {
+    const bounds = map.getBounds();
+    const recommendList = document.getElementById("recommend-list");
+    recommendList.innerHTML = "";
 
-  </script>
+    for (let marker of markers) {
+      const position = marker.getPosition();
+      if (bounds.contain(position)) {
+        const data = marker.restaurantData;
+        const card = document.createElement("div");
+        card.className = "food-box";
+        card.innerHTML = `
+          <img src="${data.imageUrl}" alt="${data.name}">
+          <p>${data.name}<br>${data.description || ""}<br>위치: ${data.address}<br>추천 메뉴: ${data.menu}</p>
+        `;
+        recommendList.appendChild(card);
+      }
+    }
+  }
+
+  function createOverlayContent(data) {
+    return `
+        <div style="width: 130px; height: 130px; border: 2px solid #2f5939; border-radius: 6px; overflow: hidden; background-color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+        <img src="${data.imageUrl}" style="width: 100%; height: 80px; object-fit: cover;" alt="${data.name}">
+        <div style="padding: 8px;">
+          <p style="margin: 4px 0; font-weight: bold; font-size: 14px;">${data.name}</p>
+        </div>
+      </div>
+    `;
+  }
+
+  window.onload = function () {
+    kakao.maps.load(function () {
+      var container = document.getElementById("map");
+      var options = {
+        center: new kakao.maps.LatLng(37.530061, 126.996770),
+        level: 3
+      };
+      var map = new kakao.maps.Map(container, options);
+
+      getRestaurants(map);
+
+      kakao.maps.event.addListener(map, 'idle', function () {
+        updateRecommendListInBounds(map);
+      });
+    });
+  };
+</script>
+
 </head>
 <body>
   <header>
@@ -321,7 +355,7 @@ function addMarkersToMap(map) {
     <div class="map-section">
       <!-- <img src="./img/map.png" alt="학교 주변 지도" class="map-image"> -->
       <div id="map" style="width:600px;height:400px;"></div>
-      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=appkey(수정필요)&libraries=services,clusterer"></script>
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오key&libraries=services,clusterer"></script>
       <script>
          kakao.maps.load(function() {
             var container = document.getElementById("map");
@@ -335,26 +369,6 @@ function addMarkersToMap(map) {
             getRestaurants(map);
         });
       </script>
-      
-      <!-- 마커들 -->
-      <div class="marker" style="top: 50%; left: 30%;">
-        🍴
-        <div class="tooltip">
-          <img src="./img/pasta.png" alt="파스타">
-          <p><strong>맛있는 파스타</strong></p>
-          <p>추천메뉴: 파스타</p>
-        </div>
-      </div>
-
-      <div class="marker" style="top: 40%; left: 60%;">
-        🍴
-        <div class="tooltip">
-          <img src="./img/kimchi.png" alt="김치찌개개">
-          <p><strong>찌개마을</strong></p>
-          <p>추천메뉴: 김치찌개</p>
-        </div>
-      </div>
-      
 
       <!-- 카테고리 버튼 -->
       <div class="filter-container">
@@ -368,15 +382,7 @@ function addMarkersToMap(map) {
     </div>
 
     <!-- 추천 맛집 -->
-    <div class="recommend-section">
-      <div class="food-box">
-        <img src="./img/pasta.png" alt="파스타">
-        <p>맛있는 파스타<br>분위기 좋은 양식집<br>위치: 보광로 00로<br>추천 메뉴: 파스타</p>
-      </div>
-      <div class="food-box">
-        <img src="./img/kimchi.png" alt="김치찌개">
-        <p>찌개마을<br>김치찌개가 맛있는 한식집<br>위치: 보광로 00로<br>추천 메뉴: 김치찌개</p>
-      </div>
+    <div class="recommend-section" id="recommend-list">
     </div>
   </main>
 
